@@ -1,7 +1,7 @@
 const flipbook = document.getElementById("flipbook");
 const controls = document.getElementById("controls");
 
-const pdfUrl = "https://www.dropbox.com/scl/fi/3ycagpy5mb1oneob23gsw/big-quran.pdf?dl=1";
+const pdfUrl = "https://www.dropbox.com/scl/fi/3ycagpy5mb1oneob23gsw/big-quran.pdf?rlkey=jc42u5xla0xxrgywbele61rzy&st=79n47nwh&dl=1";
 let zoomLevel = 1;
 
 pdfjsLib.getDocument(pdfUrl).promise.then(pdf => {
