@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bn">
 <head>
   <meta charset="UTF-8">
   <title>Quran Flipbook Viewer</title>
@@ -7,24 +7,40 @@
   <!-- ✅ Load jQuery -->
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
-  <!-- ✅ Load Turn.js for flipbook -->
+  <!-- ✅ Load Turn.js -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/turn.js/4.1.0/turn.min.js"></script>
 
-  <!-- ✅ Load PDF.js (core + worker) -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.2.67/pdf.min.js"></script>
+  <!-- ✅ Load PDF.js (official stable version) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js"></script>
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss/dist/tailwind.min.css">
 
   <style>
-    body { background: #f7f8fa; text-align: center; margin: 0; font-family: sans-serif; }
-    #flipbook { margin: 20px auto; width: 900px; height: 600px; }
-    .page canvas { box-shadow: 0 0 8px rgba(0,0,0,0.2); border-radius: 8px; }
-    .loader { color: gray; padding: 50px; }
+    body {
+      background: #f7f8fa;
+      text-align: center;
+      margin: 0;
+      font-family: 'Noto Sans Bengali', sans-serif;
+    }
+    #flipbook {
+      margin: 20px auto;
+      width: 900px;
+      height: 600px;
+    }
+    .page canvas {
+      box-shadow: 0 0 8px rgba(0,0,0,0.2);
+      border-radius: 8px;
+    }
+    .loader {
+      color: gray;
+      padding: 40px;
+    }
   </style>
 </head>
 
 <body>
-  <h1 class="text-2xl font-bold my-4">📖 Quran Flipbook Viewer</h1>
+  <h1 class="text-2xl font-bold my-4">📖 কুরআন Flipbook Viewer</h1>
 
   <div class="flex justify-center mb-4">
     <input id="zoom-slider" type="range" min="1" max="3" step="0.1" value="1.5">
@@ -32,7 +48,7 @@
 
   <div id="flipbook"></div>
 
-  <!-- ✅ Load main flipbook script -->
+  <!-- ✅ Load main flipbook JS -->
   <script src="flipbook.js"></script>
 </body>
 </html>
