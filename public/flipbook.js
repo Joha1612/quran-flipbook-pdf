@@ -1,38 +1,40 @@
 // flipbook.js
-// === Dropbox PDF Flipbook Viewer ===
+// === Dropbox Quran PDF Flipbook ===
 
+// ✅ Dropbox PDF URL
 const pdfUrl = "https://www.dropbox.com/scl/fi/3ycagpy5mb1oneob23gsw/big-quran.pdf?rlkey=jc42u5xla0xxrgywbele61rzy&st=bseaaeg7&dl=1";
 
-// PDF.js load
+// ✅ Ensure PDF.js loaded
 if (typeof pdfjsLib === "undefined") {
-  alert("PDF.js not loaded!");
+  alert("PDF.js not loaded! Please check your internet connection or CDN link.");
+  throw new Error("PDF.js not loaded");
 }
 
-// PDF.js worker setup
+// ✅ Set worker
 pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.2.67/pdf.worker.min.js";
 
 const flipbookContainer = document.getElementById("flipbook");
 const zoomSlider = document.getElementById("zoom-slider");
-let pdfDoc = null;
-let scale = 1.5; // zoom level
-let totalPages = 0;
 
-// Load PDF from Dropbox
+let pdfDoc = null;
+let totalPages = 0;
+let scale = 1.5;
+
+// ✅ Load PDF
 async function loadPDF() {
   try {
     const loadingTask = pdfjsLib.getDocument(pdfUrl);
     pdfDoc = await loadingTask.promise;
     totalPages = pdfDoc.numPages;
-
-    console.log(`📘 Loaded ${totalPages} pages from Dropbox PDF`);
+    console.log(`📘 Loaded ${totalPages} pages from Dropbox`);
     await renderFlipbook();
-  } catch (error) {
-    console.error("PDF Load Error:", error);
-    flipbookContainer.innerHTML = `<p style="color:red">Failed to load PDF. Please check the Dropbox link.</p>`;
+  } catch (err) {
+    console.error("❌ PDF Load Error:", err);
+    flipbookContainer.innerHTML = `<p style="color:red">Failed to load the PDF from Dropbox.</p>`;
   }
 }
 
-// Render each page to image (lazy load)
+// ✅ Render Flipbook
 async function renderFlipbook() {
   flipbookContainer.innerHTML = "";
 
@@ -42,7 +44,7 @@ async function renderFlipbook() {
     pageDiv.innerHTML = `<div class="loader">Loading page ${i}...</div>`;
     flipbookContainer.appendChild(pageDiv);
 
-    // Lazy load image when visible
+    // Lazy load pages
     const observer = new IntersectionObserver(async (entries, obs) => {
       if (entries[0].isIntersecting) {
         const page = await pdfDoc.getPage(i);
@@ -51,9 +53,7 @@ async function renderFlipbook() {
         const context = canvas.getContext("2d");
         canvas.height = viewport.height;
         canvas.width = viewport.width;
-
-        await page.render({ canvasContext: context, viewport: viewport }).promise;
-
+        await page.render({ canvasContext: context, viewport }).promise;
         pageDiv.innerHTML = "";
         pageDiv.appendChild(canvas);
         obs.unobserve(pageDiv);
@@ -65,7 +65,7 @@ async function renderFlipbook() {
   initTurnJS();
 }
 
-// Initialize Turn.js for flip animation
+// ✅ Turn.js
 function initTurnJS() {
   $("#flipbook").turn({
     width: 900,
@@ -73,23 +73,16 @@ function initTurnJS() {
     autoCenter: true,
     elevation: 50,
     gradients: true,
-    when: {
-      turned: (e, page) => console.log("Turned to page:", page),
-    },
   });
-
-  // Swipe gestures
-  $("#flipbook").on("swipeleft", () => $("#flipbook").turn("next"));
-  $("#flipbook").on("swiperight", () => $("#flipbook").turn("previous"));
 }
 
-// Zoom slider
+// ✅ Zoom control
 if (zoomSlider) {
-  zoomSlider.addEventListener("input", (e) => {
+  zoomSlider.addEventListener("input", async (e) => {
     scale = parseFloat(e.target.value);
-    renderFlipbook();
+    await renderFlipbook();
   });
 }
 
-// Load on start
+// ✅ Initialize
 document.addEventListener("DOMContentLoaded", loadPDF);
