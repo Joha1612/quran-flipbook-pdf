@@ -1,69 +1,24 @@
-<!doctype html>
-<html lang="bn">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Quran Flipbook — Dropbox PDF</title>
+  <meta charset="UTF-8" />
+  <title>Quran Flipbook Viewer</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.2.67/pdf.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/turn.js/4.1.0/turn.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss/dist/tailwind.min.css">
   <style>
-    :root{
-      --bg:#0b1220; --card:#0f1b2b; --accent:#0ea5a4; --text:#e6eef6;
-    }
-    html,body{height:100%;margin:0;background:var(--bg);color:var(--text);font-family:system-ui,Segoe UI,Roboto,Arial}
-    .wrap{max-width:1100px;margin:16px auto;padding:12px}
-    header{display:flex;align-items:center;gap:12px}
-    header h1{margin:0;font-size:18px}
-    .controls{margin-left:auto;display:flex;gap:8px;align-items:center}
-    button,select{background:var(--accent);border:none;color:#032; padding:8px 10px;border-radius:8px;cursor:pointer;font-weight:600}
-    #viewer{height:78vh;margin-top:12px;background:var(--card);border-radius:8px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
-    .book{width:100%;height:100%;display:flex;gap:8px;padding:12px;box-sizing:border-box;align-items:center;justify-content:center;touch-action:pan-y}
-    .page{flex:1 1 50%;background:#071017;border-radius:6px;overflow:hidden;display:flex;align-items:center;justify-content:center;position:relative;min-width:220px}
-    .page canvas{width:100%;height:auto;display:block}
-    .placeholder{color:#89a;font-size:14px;padding:12px;text-align:center}
-    .pnum{position:absolute;bottom:8px;right:8px;background:rgba(0,0,0,0.35);padding:4px 8px;border-radius:6px;font-size:12px}
-    .loader{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);color:#9fd}
-    @media (max-width:720px){ .book{padding:6px} .page{min-width:140px} .controls{flex-wrap:wrap} }
+    body { background: #f7f8fa; text-align: center; }
+    #flipbook { margin: 20px auto; width: 900px; height: 600px; }
+    .page canvas { box-shadow: 0 0 8px rgba(0,0,0,0.2); border-radius: 8px; }
+    .loader { color: gray; padding: 50px; }
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <header>
-      <h1>📖 Quran Flipbook (Dropbox PDF)</h1>
-      <div class="controls">
-        <label style="font-size:13px;color:#cfe">PDF source:</label>
-        <select id="pdfSelect" style="padding:6px;border-radius:6px;background:#0a3;">
-          <option value="">— choose —</option>
-          <option value="https://www.dropbox.com/scl/fi/3ycagpy5mb1oneob23gsw/big-quran.pdf?rlkey=jc42u5xla0xxrgywbele61rzy&st=79n47nwh&dl=1" selected>My Dropbox Quran</option>
-        </select>
-        <button id="loadBtn">Load PDF</button>
-        <button id="zoomIn">🔍+</button>
-        <button id="zoomOut">🔍−</button>
-        <select id="startPage" style="padding:6px;border-radius:6px;background:#0a3;">
-          <option value="1">Start page 1</option>
-        </select>
-      </div>
-    </header>
+  <h1 class="text-2xl font-bold my-4">📖 Quran Flipbook Viewer</h1>
+  <input id="zoom-slider" type="range" min="1" max="3" step="0.1" value="1.5">
+  <div id="flipbook"></div>
 
-    <div id="viewer">
-      <div class="book" id="book">
-        <div class="page" data-side="left">
-          <div class="placeholder">Left page</div>
-          <div class="pnum"></div>
-        </div>
-        <div class="page" data-side="right">
-          <div class="placeholder">Right page</div>
-          <div class="pnum"></div>
-        </div>
-      </div>
-    </div>
-
-    <div style="margin-top:10px;display:flex;justify-content:space-between;align-items:center">
-      <div id="status">Status: idle</div>
-      <div style="font-size:13px;color:#9ab">Click left-half → next · right-half → prev · Swipe supported</div>
-    </div>
-  </div>
-
-  <!-- PDF.js from CDN -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.14.305/pdf.min.js"></script>
   <script src="flipbook.js"></script>
 </body>
 </html>
