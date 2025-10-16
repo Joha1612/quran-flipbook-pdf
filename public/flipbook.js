@@ -1,5 +1,9 @@
 // Quran Flipbook - Dropbox PDF Viewer
-const pdfUrl = "https://www.dropbox.com/scl/fi/3ycagpy5mb1oneob23gsw/big-quran.pdf?rlkey=jc42u5xla0xxrgywbele61rzy&st=bseaaeg7&dl=1";
+// const pdfUrl = "https://www.dropbox.com/scl/fi/3ycagpy5mb1oneob23gsw/big-quran.pdf?rlkey=jc42u5xla0xxrgywbele61rzy&st=bseaaeg7&dl=1";
+const proxy = "https://cors.isomorphic-git.org/";
+const dropboxLink = "https://www.dropbox.com/scl/fi/3ycagpy5mb1oneob23gsw/big-quran.pdf?rlkey=jc42u5xla0xxrgywbele61rzy&dl=1";
+const pdfUrl = proxy + dropboxLink;
+
 
 // ✅ PDF.js sanity check
 if (typeof pdfjsLib === "undefined") {
